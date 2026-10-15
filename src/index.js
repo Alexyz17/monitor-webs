@@ -3,7 +3,9 @@
 //   node src/index.js            → comprueba en bucle cada intervalMinutes
 //   node src/index.js --once     → una sola pasada (para cron o CI)
 import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { realpathSync } from "node:fs";
 import { dirname } from "node:path";
+import { pathToFileURL } from "node:url";
 import { loadConfig } from "./config.js";
 import { checkHttp, checkSsl, checkDomain } from "./checks.js";
 import { evaluate, shouldAlert, formatAlert } from "./evaluate.js";
@@ -92,7 +94,9 @@ async function main() {
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith("index.js")) {
+// realpath: con `npm link` o el bin de npm, argv[1] es un enlace al archivo
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href;
+if (isMain) {
   main().catch((e) => {
     console.error(e.message);
     process.exit(2);

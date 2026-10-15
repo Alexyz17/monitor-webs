@@ -1,8 +1,12 @@
 # monitor-webs
 
+[![Tests](https://github.com/Alexyz17/monitor-webs/actions/workflows/test.yml/badge.svg)](https://github.com/Alexyz17/monitor-webs/actions/workflows/test.yml)
+
 Vigila webs y avisa antes de que el cliente se dé cuenta: comprueba que responden, cuánto tardan, cuándo caduca el certificado SSL y cuándo caduca el dominio. Envía alertas por Telegram o por webhook (Discord, Slack, n8n…) y genera una página de estado en HTML.
 
 **Sin dependencias**: solo Node.js 20 o superior. No hay que ejecutar `npm install`.
+
+![Página de estado: cuatro webs operativas con los días que faltan para que caduquen el SSL y el dominio, y una web caída con el motivo](docs/captura.png)
 
 ## Qué comprueba
 
@@ -60,6 +64,8 @@ Sin canales configurados, las alertas salen por consola. En Node 20.6 o superior
 ```bash
 docker compose up -d --build
 ```
+
+**CI**: GitHub Actions pasa los tests con Node 20, 22 y 24 en cada push.
 
 **GitLab CI + Pages** sin servidor: `.gitlab-ci.yml` pasa los tests en cada push. Con una *pipeline schedule* (por ejemplo cada hora), comprueba las webs y publica la página en GitLab Pages. Pon el contenido de `sites.json` en la variable `SITES_JSON` y las credenciales de alertas como variables protegidas.
 
