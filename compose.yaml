@@ -15,7 +15,12 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - status-page:/usr/share/nginx/html:ro
+      # nocopy: sin él, Docker llena el volumen con el index.html de nginx (de root) y el monitor no puede escribirlo
+      - type: volume
+        source: status-page
+        target: /usr/share/nginx/html
+        read_only: true
+        volume: { nocopy: true }
 
 volumes:
   monitor-state:
