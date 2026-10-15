@@ -12,8 +12,8 @@ export function renderStatusPage(entries, { title = "Estado de las webs", genera
       const time = e.http?.ms !== undefined ? `${e.http.ms} ms` : "—";
       return `<tr>
   <td><span class="dot ${e.level}"></span>${escapeHtml(e.name)}<div class="url">${escapeHtml(e.url)}</div></td>
-  <td>${LABEL[e.level]}</td><td>${time}</td><td>${ssl}</td><td>${domain}</td>
-  <td class="problems">${e.problems.map(escapeHtml).join("<br>") || "—"}</td>
+  <td data-label="Estado">${LABEL[e.level]}</td><td data-label="Respuesta">${time}</td><td data-label="SSL caduca en">${ssl}</td><td data-label="Dominio caduca en">${domain}</td>
+  <td data-label="Detalle" class="problems">${e.problems.map(escapeHtml).join("<br>") || "—"}</td>
 </tr>`;
     })
     .join("\n");
@@ -40,6 +40,13 @@ export function renderStatusPage(entries, { title = "Estado de las webs", genera
   .url, .meta { color: var(--muted); font-size: 13px; }
   .problems { font-size: 13px; }
   .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; }
+  @media (max-width: 640px) {
+    table { min-width: 0; } thead { display: none; }
+    tr, td { display: block; } tr { border-bottom: 1px solid var(--line); } tr:last-child { border-bottom: 0; }
+    td { border: 0; padding: 4px 14px; } td:first-child { padding-top: 12px; font-weight: 600; } td:last-child { padding-bottom: 12px; }
+    td[data-label]::before { content: attr(data-label) ": "; color: var(--muted); }
+    .url { font-weight: 400; overflow-wrap: anywhere; }
+  }
   .dot.ok { background: var(--ok); } .dot.aviso { background: var(--aviso); } .dot.caida { background: var(--caida); }
 </style>
 </head>
