@@ -1,0 +1,28 @@
+# Ejecuta los tests en cada push y, con una "pipeline schedule" (cada hora, por ejemplo),
+# comprueba las webs y publica la página de estado en GitLab Pages.
+# Variables en Settings > CI/CD > Variables: SITES_JSON (contenido de sites.json),
+# TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID o ALERT_WEBHOOK_URL (márcalas como masked).
+
+image: node:22-alpine
+
+stages: [test, deploy]
+
+test:
+  stage: test
+  script:
+    - npm test
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "schedule"
+
+pages:
+  stage: deploy
+  cache:
+    key: monitor-state
+    paths: [data/]
+  script:
+    - echo "$SITES_JSON" > sites.json
+    - node src/index.js --once || true
+  artifacts:
+    paths: [public]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"

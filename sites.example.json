@@ -1,0 +1,14 @@
+{
+  "title": "Estado de las webs",
+  "intervalMinutes": 5,
+  "sslWarnDays": 14,
+  "domainWarnDays": 30,
+  "slowMs": 3000,
+  "timeoutMs": 10000,
+  "repeatHours": 24,
+  "sites": [
+    { "name": "Mi portfolio", "url": "https://alexvillar10.gitlab.io/" },
+    { "name": "Aprende a programar", "url": "https://alexvillar10.gitlab.io/aprende-a-programar/", "checkDomain": false },
+    { "name": "Web de ejemplo", "url": "https://www.ejemplo.cat/" }
+  ]
+}

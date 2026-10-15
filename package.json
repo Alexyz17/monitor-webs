@@ -1,0 +1,16 @@
+{
+  "name": "monitor-webs",
+  "version": "1.0.0",
+  "description": "Vigila webs: disponibilidad, caducidad del SSL y del dominio, con alertas y página de estado. Sin dependencias.",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": { "monitor-webs": "src/index.js" },
+  "scripts": {
+    "start": "node src/index.js",
+    "once": "node src/index.js --once",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": { "node": ">=20" },
+  "author": "Alex Villar Gracia",
+  "license": "MIT"
+}
